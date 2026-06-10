@@ -39,6 +39,9 @@ export default function ThanksPage() {
           Before your consultation, please watch this short video so you know what to do
           next.
         </p>
+        <p className="mt-3 max-w-2xl rounded-[8px] border border-gold/30 bg-white px-4 py-3 text-sm font-bold leading-6 text-ink shadow-sm">
+          Don&apos;t forget to check your email to book an appointment with me.
+        </p>
 
         <div className="mt-9 w-full overflow-hidden rounded-[8px] border border-zinc-200 bg-ink shadow-glow">
           <div className="aspect-video w-full">
