@@ -2,7 +2,6 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Lock, Send } from "lucide-react";
 
 const FORM_ID = "6a23e2429ababa57f8e3f674";
@@ -19,42 +18,6 @@ declare global {
 }
 
 export default function CTAForm() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const root = document.querySelector(ROOT_SELECTOR);
-    if (!root) return;
-
-    let timeoutId: number | undefined;
-    const redirectAfterSuccess = () => {
-      if (timeoutId) return;
-      timeoutId = window.setTimeout(() => {
-        router.push("/thanks");
-      }, 5000);
-    };
-
-    const hasSucceeded = () =>
-      root.getAttribute("data-ff-stage") === "success" ||
-      root.classList.contains("fd-has-success") ||
-      Boolean(root.querySelector(".fd-has-success, .fd-form-success[style*='block']"));
-
-    const observer = new MutationObserver(() => {
-      if (hasSucceeded()) redirectAfterSuccess();
-    });
-
-    observer.observe(root, {
-      attributes: true,
-      attributeFilter: ["data-ff-stage", "class"],
-      childList: true,
-      subtree: true
-    });
-
-    return () => {
-      observer.disconnect();
-      if (timeoutId) window.clearTimeout(timeoutId);
-    };
-  }, [router]);
-
   useEffect(() => {
     const form = document.querySelector<HTMLFormElement>(`${ROOT_SELECTOR} form[data-ff-el="form"]`);
     if (!form) return;
@@ -139,7 +102,7 @@ export default function CTAForm() {
       >
         <div
           data-ff-el="config"
-          data-ff-config="eyJ0cmlnZ2VyIjp7Im1vZGUiOiJpbW1lZGlhdGVseSIsInZhbHVlIjowfSwib25TdWNjZXNzIjp7Im1vZGUiOiJtZXNzYWdlIiwibWVzc2FnZSI6IiIsInJlZGlyZWN0VXJsIjoiIn0sImNvaSI6ZmFsc2UsInNob3dGb3JSZXR1cm5WaXNpdG9ycyI6dHJ1ZSwibm90aWZpY2F0aW9uIjpmYWxzZSwiZ2RwciI6eyJhY2NlcHRzTWFya2V0aW5nIjpmYWxzZSwicHJpdmFjeVBvbGljeSI6eyJlbmFibGVkIjpmYWxzZSwibWFuZGF0b3J5IjpmYWxzZX19LCJ0cmFja2luZ0NvbmZpZyI6eyJtZXRhUGl4ZWxJZCI6IiIsImNvb2tpZUJhbm5lckVuYWJsZWQiOmZhbHNlLCJnb29nbGVBbmFseXRpY3NJZCI6IiJ9fQ=="
+          data-ff-config="eyJ0cmlnZ2VyIjp7Im1vZGUiOiJpbW1lZGlhdGVseSIsInZhbHVlIjowfSwib25TdWNjZXNzIjp7Im1vZGUiOiJyZWRpcmVjdCIsIm1lc3NhZ2UiOiIiLCJyZWRpcmVjdFVybCI6Imh0dHBzOi8vY29uc3VsdGF0aW9uLnNoYWxpbmkuY29tLm5wL3RoYW5rcyJ9LCJjb2kiOmZhbHNlLCJzaG93Rm9yUmV0dXJuVmlzaXRvcnMiOnRydWUsIm5vdGlmaWNhdGlvbiI6ZmFsc2UsImdkcHIiOnsiYWNjZXB0c01hcmtldGluZyI6ZmFsc2UsInByaXZhY3lQb2xpY3kiOnsiZW5hYmxlZCI6ZmFsc2UsIm1hbmRhdG9yeSI6ZmFsc2V9fSwidHJhY2tpbmdDb25maWciOnsibWV0YVBpeGVsSWQiOiIiLCJjb29raWVCYW5uZXJFbmFibGVkIjpmYWxzZSwiZ29vZ2xlQW5hbHl0aWNzSWQiOiIifX0="
           style={{ display: "none" }}
         />
 
@@ -253,7 +216,9 @@ export default function CTAForm() {
             </div>
 
             <div className="fd-form-success rounded-[8px] bg-porcelain p-5 text-center" data-ff-el="success">
-              <p className="text-lg font-bold text-ink">Thank you. Your details were submitted.</p>
+              <p className="text-lg font-bold text-ink">
+                You&apos;ve successfully signed up! Check your email for details.
+              </p>
               <p className="mt-2 text-sm leading-6 text-zinc-700">
                 Please wait a moment while we take you to the next page.
               </p>
